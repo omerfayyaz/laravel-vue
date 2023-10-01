@@ -31,7 +31,7 @@
     </div>
 </template>
 
-<script>
+<!-- <script>
 import axios from 'axios';
 
 export default {
@@ -50,7 +50,16 @@ export default {
             .catch(error => console.log(error))
         }
     }
-
-
 }
+</script> -->
+
+<script setup>
+    import { onMounted } from 'vue';
+    import usePosts from '../../composables/posts'
+
+    const { posts, getPosts } = usePosts()
+    
+    onMounted(() => {
+        getPosts()
+    })
 </script>
