@@ -9,4 +9,6 @@ export default function usePosts() {
             posts.value = response.data;
         })
     }
+
+    return { posts, getPosts }
 }
