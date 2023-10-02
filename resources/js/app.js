@@ -1,7 +1,7 @@
-import './bootstrap';
+import '@/bootstrap';
 
 import { createApp } from 'vue';
-import PostsIndex from './components/Posts/Index.vue';
+import PostsIndex from '@/components/Posts/Index.vue';
 
 createApp({})
     .component('PostsIndex', PostsIndex)
