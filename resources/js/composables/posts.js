@@ -6,7 +6,7 @@ export default function usePosts() {
     const getPosts =  async (page = 1) => {
         axios.get('/api/posts?page=' + page)
         .then(response => {
-            posts.value = response.data.data;
+            posts.value = response.data;
         })
     }
 
