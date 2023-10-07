@@ -1,6 +1,14 @@
 <template>
     <div class="overflow-hidden overflow-x-auto p-6 bg-white border-gray-200">
         <div class="min-w-full align-middle">
+            <div class="mb-4">
+                <select v-model="selectedCategory" class="block mt-1 w-full sm:w-1/4 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    <option value="" selected>-- Filter by Category --</option>
+                    <option v-for="category in categories" :value="category.id" :key="category.id">
+                        {{ category.name }}
+                    </option>
+                </select>
+            </div>
             <table class="min-w-full divide-y divide-gray-200 border">
                 <thead>
                     <tr>
@@ -38,13 +46,17 @@
 </template>
 
 <script setup>
-    import { onMounted } from 'vue';
+    import { onMounted, ref } from 'vue';
     import { TailwindPagination } from 'laravel-vue-pagination';
-    import usePosts from '@/composables/posts'
+    import usePosts from '@/composables/posts';
+    import useCategories from '@/composables/categories';
 
-    const { posts, getPosts } = usePosts()
+    const { posts, getPosts } = usePosts();
+    const { categories, getCategories } = useCategories();
+    const selectedCategory = ref('');
 
     onMounted(() => {
         getPosts()
-    })
+        getCategories()
+    });
 </script>
