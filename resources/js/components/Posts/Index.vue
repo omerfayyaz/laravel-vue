@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue';
+    import { onMounted, ref, watch } from 'vue';
     import { TailwindPagination } from 'laravel-vue-pagination';
     import usePosts from '@/composables/posts';
     import useCategories from '@/composables/categories';
@@ -59,4 +59,8 @@
         getPosts()
         getCategories()
     });
+
+    watch(selectedCategory, async (current, previous) => {
+        getPosts(1, current)
+    })
 </script>
