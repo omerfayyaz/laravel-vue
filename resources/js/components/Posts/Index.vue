@@ -51,9 +51,11 @@
     import usePosts from '@/composables/posts';
     import useCategories from '@/composables/categories';
 
+    const selectedCategory = ref('');
+    const orderColumn = ref('created_at');
+    const orderDirection = ref('desc');
     const { posts, getPosts } = usePosts();
     const { categories, getCategories } = useCategories();
-    const selectedCategory = ref('');
 
     onMounted(() => {
         getPosts()
