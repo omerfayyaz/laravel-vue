@@ -7,8 +7,16 @@ import PostsIndex from '@/components/Posts/Index.vue';
 import PostsCreate from '@/components/Posts/Create.vue';
 
 const routes = [
-    { path: '/', component: PostsIndex },
-    { path: '/posts/create', component: PostsCreate}
+    {
+        path: '/',
+        name: 'posts.index',
+        component: PostsIndex
+    },
+    {
+        path: '/posts/create',
+        name: 'posts.create',
+        component: PostsCreate
+    }
 ]
 
 const router = createRouter({
