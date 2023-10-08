@@ -67,7 +67,7 @@
                                     'hidden': orderDirection !== '' && orderDirection !== 'desc' && orderColumn === 'created_at',
                                 }">&darr;</span>
                                 </div>
-                            </div> 
+                            </div>
                         </th>
                     </tr>
                 </thead>
@@ -98,6 +98,12 @@
     const orderDirection = ref('desc');
     const { posts, getPosts } = usePosts();
     const { categories, getCategories } = useCategories();
+
+    const updateOrdering = (column) => {
+        orderColumn.value = column;
+        orderDirection.value = (orderDirection.value == 'desc') ? 'asc' : 'desc';
+        getPosts(1, selectedCategory.value, orderColumn.value, orderDirection.value);
+    }
 
     onMounted(() => {
         getPosts()
