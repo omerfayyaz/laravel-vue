@@ -6,6 +6,11 @@
                 Title
             </label>
             <input v-model="post.title" id="post-title" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+            <div class="text-red-600 mt-1">
+                <div v-for="message in validationErrors?.title" :key="message">
+                    {{ message }}
+                </div>
+            </div>
         </div>
 
         <!-- Content -->
@@ -14,6 +19,11 @@
                 Content
             </label>
             <textarea v-model="post.content" id="post-content" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"></textarea>
+            <div class="text-red-600 mt-1">
+                <div v-for="message in validationErrors?.content" :key="message">
+                    {{ message }}
+                </div>
+            </div>
         </div>
 
         <!-- Category -->
@@ -25,6 +35,11 @@
                 <option value="" selected>-- Choose category --</option>
                 <option  v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
             </select>
+            <div class="text-red-600 mt-1">
+                <div v-for="message in validationErrors?.category_id" :key="message">
+                    {{ message }}
+                </div>
+            </div>
         </div>
 
         <!-- Buttons -->
@@ -45,7 +60,7 @@
         category_id: '',
     })
 
-    const { storePost} = usePosts();
+    const { storePost, validationErrors } = usePosts();
     const { categories, getCategories } = useCategories();
 
     onMounted(() => {
