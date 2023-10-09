@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 
 export default function usePosts() {
     const posts = ref({});
+    const post = ref({});
     const router = useRouter();
     const validationErrors = ref({});
     const isLoading = ref(false);
@@ -50,5 +51,12 @@ export default function usePosts() {
         });
     }
 
-    return { posts, getPosts, storePost, validationErrors, isLoading}
+    const getPost =  async (id) => {
+        axios.get('/api/posts/' + id)
+        .then(response => {
+            post.value = response.data.data;
+        })
+    }
+
+    return { posts, getPosts, post, getPost, storePost, validationErrors, isLoading }
 }
