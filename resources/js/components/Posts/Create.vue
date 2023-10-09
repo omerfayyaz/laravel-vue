@@ -1,5 +1,5 @@
 <template>
-    <form>
+    <form @submit.prevent="submit">
         <!-- Title -->
         <div>
             <label for="post-title" class="block text-sm font-medium text-gray-700">
@@ -39,6 +39,10 @@
     import useCategories from '@/composables/categories.js';
 
     const { categories, getCategories } = useCategories();
+
+    const submit = () => {
+        console.log('submitted');
+    }
 
     onMounted(() => {
         getCategories();
