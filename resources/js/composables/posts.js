@@ -48,7 +48,8 @@ export default function usePosts() {
                 validationErrors.value = error.response.data.errors;
                 isLoading.value = false;
             }
-        });
+        })
+        .finally(() => isLoading.value = false);
     }
 
     const getPost =  async (id) => {
@@ -58,5 +59,32 @@ export default function usePosts() {
         })
     }
 
-    return { posts, getPosts, post, getPost, storePost, validationErrors, isLoading }
+    const updatePost = async (post) => {
+
+        if (isLoading.value) { return }
+
+        isLoading.value = true;
+        validationErrors.value = {};
+
+        let serializedPost = new FormData()
+        for (let item in post) {
+            if (post.hasOwnProperty(item)) {
+                serializedPost.append(item, post[item])
+            }
+        }
+
+        axios.put('/api/posts/' + post.id, serializedPost)
+        .then(response => {
+            router.push({name: 'posts.index'});
+        })
+        .catch(error => {
+            console.log('error', error)
+            if (error.response?.data) {
+                validationErrors.value = error.response.data.errors;
+            }
+        })
+        .finally(() => isLoading.value = false);
+    }
+
+    return { posts, getPosts, post, getPost, storePost, updatePost, validationErrors, isLoading }
 }

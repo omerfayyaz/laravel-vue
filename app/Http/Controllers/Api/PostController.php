@@ -52,4 +52,21 @@ class PostController extends Controller
     {
         return new PostResource($post);
     }
+
+    public function update(Post $post, StorePostRequest $request)
+    {
+        $post->update($request->validated());
+
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $filename = $file->getClientOriginalName();
+
+            // Store the file in the 'posts' directory within the default disk
+            $path = $file->storeAs('posts', $filename);
+
+            info($path);
+        }
+
+        return new PostResource($post);
+    }
 }
