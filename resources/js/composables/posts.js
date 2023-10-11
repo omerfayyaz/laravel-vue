@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import { useRouter } from "vue-router";
 
 export default function usePosts() {
@@ -8,6 +8,8 @@ export default function usePosts() {
     const router = useRouter();
     const validationErrors = ref({});
     const isLoading = ref(false);
+    const swal = inject('$swal');
+
 
     const getPosts =  async (
         page = 1,
@@ -41,6 +43,10 @@ export default function usePosts() {
         axios.post('/api/posts', serializedPost)
         .then(response => {
             router.push({name: 'posts.index'});
+            swal({
+                icon: 'success',
+                title: 'Post saved successfully.'
+            })
         })
         .catch(error => {
             console.log('error', error)
@@ -69,6 +75,10 @@ export default function usePosts() {
         axios.put('/api/posts/' + post.id, post)
         .then(response => {
             router.push({name: 'posts.index'});
+            swal({
+                icon: 'success',
+                title: 'Post updated successfully.'
+            })
         })
         .catch(error => {
             console.log('error', error)
