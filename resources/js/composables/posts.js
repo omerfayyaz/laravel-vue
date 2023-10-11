@@ -90,20 +90,35 @@ export default function usePosts() {
     }
 
     const deletePost = async (id) => {
-        axios.delete('/api/posts/' + id)
-        .then(response => {
-            getPosts();
-            router.push({name: 'posts.index'});
-            swal({
-                icon: 'success',
-                title: 'Post deleted successfully.'
-            })
+        swal({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this action!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            confirmButtonColor: '#ef4444',
+            timer: 20000,
+            timerProgressBar: true,
+            reverseButtons: true
         })
-        .catch(error => {
-            swal({
-                icon: 'error',
-                title: 'Error deleting post.'
-            })
+        .then(result => {
+            if (result.isConfirmed) {
+                axios.delete('/api/posts/' + id)
+                .then(response => {
+                    getPosts();
+                    router.push({name: 'posts.index'});
+                    swal({
+                        icon: 'success',
+                        title: 'Post deleted successfully.'
+                    })
+                })
+                .catch(error => {
+                    swal({
+                        icon: 'error',
+                        title: 'Error deleting post.'
+                    })
+                })
+            }
         })
     }
 

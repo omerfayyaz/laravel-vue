@@ -83,7 +83,7 @@
                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">{{ post.created_at }}</td>
                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                             <router-link :to="{ name: 'posts.edit', params: { id: post.id } }">Edit</router-link>
-                            <a href="#" @click.prevent="deletePost(post.id)">Delete</a>
+                            <a href="#" @click.prevent="deletePost(post.id)" class="ml-2">Delete</a>
                         </td>
                     </tr>
                 </tbody>
