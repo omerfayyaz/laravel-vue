@@ -89,5 +89,33 @@ export default function usePosts() {
         .finally(() => isLoading.value = false);
     }
 
-    return { posts, getPosts, post, getPost, storePost, updatePost, validationErrors, isLoading }
+    const deletePost = async (post) => {
+        axios.delete('api/post', post.id)
+        .then(response => {
+            getPosts();
+            router.push({name: 'posts.index'});
+            swal({
+                icon: 'success',
+                title: 'Post deleted successfully.'
+            })
+        })
+        .catch(error => {
+            swal({
+                icon: 'error',
+                title: 'Error deleting post.'
+            })
+        })
+    }
+
+    return {
+        posts,
+        getPosts,
+        post,
+        getPost,
+        storePost,
+        updatePost,
+        deletePost,
+        validationErrors,
+        isLoading
+    }
 }
