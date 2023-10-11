@@ -89,8 +89,8 @@ export default function usePosts() {
         .finally(() => isLoading.value = false);
     }
 
-    const deletePost = async (post) => {
-        axios.delete('api/post', post.id)
+    const deletePost = async (id) => {
+        axios.delete('/api/posts/' + id)
         .then(response => {
             getPosts();
             router.push({name: 'posts.index'});
