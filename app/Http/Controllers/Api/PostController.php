@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -24,6 +25,18 @@ class PostController extends Controller
         $posts = Post::with('category')
         ->when(request('category'), function ($query) {
             return $query->where('category_id', request('category'));
+        })
+        ->when(request('search_category'), function (Builder $query) {
+            $query->where('category_id', request('search_category'));
+        })
+        ->when(request('search_id'), function (Builder $query) {
+            $query->where('id', request('search_id'));
+        })
+        ->when(request('search_title'), function (Builder $query) {
+            $query->where('title', 'like', '%' . request('search_title') . '%');
+        })
+        ->when(request('search_content'), function (Builder $query) {
+            $query->where('content', 'like', '%' . request('search_content') . '%');
         })
         ->orderBy($orderColumn, $orderDirection)
         ->paginate(10);
