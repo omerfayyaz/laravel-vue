@@ -23,9 +23,6 @@ class PostController extends Controller
         }
 
         $posts = Post::with('category')
-        ->when(request('category'), function ($query) {
-            return $query->where('category_id', request('category'));
-        })
         ->when(request('search_category'), function (Builder $query) {
             $query->where('category_id', request('search_category'));
         })
