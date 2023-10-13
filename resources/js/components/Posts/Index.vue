@@ -2,7 +2,7 @@
     <div class="overflow-hidden overflow-x-auto p-6 bg-white border-gray-200">
         <div class="min-w-full align-middle">
             <div class="mb-4">
-                <select  v-model="selectedCategory" class="block mt-1 w-full sm:w-1/4 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <select  v-model="search_category" class="block mt-1 w-full sm:w-1/4 rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     <option value="" selected>-- Filter by Category --</option>
                     <option v-for="category in categories" :value="category.id" :key="category.id">
                         {{ category.name }}
@@ -89,7 +89,7 @@
                 </tbody>
             </table>
 
-            <TailwindPagination :data="posts" @pagination-change-page="page => getPosts(page, selectedCategory, orderColumn, orderDirection)" class="mt-4" />
+            <TailwindPagination :data="posts" @pagination-change-page="page => getPosts(page, search_category, orderColumn, orderDirection)" class="mt-4" />
         </div>
     </div>
 </template>
@@ -100,7 +100,11 @@
     import usePosts from '@/composables/posts';
     import useCategories from '@/composables/categories';
 
-    const selectedCategory = ref('');
+    const search_category = ref('')
+    const search_id = ref('')
+    const search_title = ref('')
+    const search_content = ref('')
+    const search_global = ref('')
     const orderColumn = ref('created_at');
     const orderDirection = ref('desc');
     const { posts, getPosts, deletePost } = usePosts();
@@ -109,7 +113,15 @@
     const updateOrdering = (column) => {
         orderColumn.value = column;
         orderDirection.value = (orderDirection.value == 'desc') ? 'asc' : 'desc';
-        getPosts(1, selectedCategory.value, orderColumn.value, orderDirection.value);
+        getPosts(
+            1,
+            search_category.value,
+            search_id.value,
+            search_title.value,
+            search_content.value,
+            orderColumn.value,
+            orderDirection.value
+        );
     }
 
     onMounted(() => {
@@ -117,7 +129,13 @@
         getCategories()
     });
 
-    watch(selectedCategory, async (current, previous) => {
-        getPosts(1, current)
+    watch(search_category, async (current, previous) => {
+        getPosts(
+            1,
+            current,
+            search_id.value,
+            search_title.value,
+            search_content.value,
+        )
     })
 </script>
