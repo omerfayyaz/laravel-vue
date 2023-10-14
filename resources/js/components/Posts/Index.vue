@@ -13,6 +13,27 @@
                 <thead>
                     <tr>
                         <th class="px-6 py-3 bg-gray-50 text-left">
+                            <input v-model="search_id" type="text" class="inline-block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Filter by ID">
+                        </th>
+                        <th class="px-6 py-3 bg-gray-50 text-left">
+                            <input v-model="search_title" type="text" class="inline-block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Filter by Title">
+                        </th>
+                        <th class="px-6 py-3 bg-gray-50 text-left">
+                            <select v-model="search_category" class="inline-block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <option value="" selected>-- all categories --</option>
+                                <option v-for="category in categories" :key="category.id" :value="category.id">
+                                    {{ category.name }}
+                                </option>
+                            </select>
+                        </th>
+                        <th class="px-6 py-3 bg-gray-50 text-left">
+                            <input v-model="search_content" type="text" class="inline-block w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Filter by Content">
+                        </th>
+                        <th class="px-6 py-3 bg-gray-50 text-left"></th>
+                        <th class="px-6 py-3 bg-gray-50 text-left"></th>
+                    </tr>
+                    <tr>
+                        <th class="px-6 py-3 bg-gray-50 text-left">
                             <div class="flex flex-row items-center justify-between cursor-pointer" @click="updateOrdering('id')">
                                 <div class="leading-4 font-medium text-gray-500 uppercase tracking-wider" :class="{ 'font-bold text-blue-600': orderColumn === 'id' }">
                                     ID
@@ -129,13 +150,40 @@
         getCategories()
     });
 
-    watch(search_category, async (current, previous) => {
+    watch(search_category, (current, previous) => {
         getPosts(
             1,
             current,
             search_id.value,
             search_title.value,
-            search_content.value,
+            search_content.value
+        )
+    })
+    watch(search_id, (current, previous) => {
+        getPosts(
+            1,
+            search_category.value,
+            current,
+            search_title.value,
+            search_content.value
+        )
+    })
+    watch(search_title, (current, previous) => {
+        getPosts(
+            1,
+            search_category.value,
+            search_id.value,
+            current,
+            search_content.value
+        )
+    })
+    watch(search_content, (current, previous) => {
+        getPosts(
+            1,
+            search_category.value,
+            search_id.value,
+            search_title.value,
+            current
         )
     })
 </script>
