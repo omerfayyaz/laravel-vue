@@ -21,6 +21,7 @@ export default function useAuth() {
 
         axios.post('/login', loginForm)
             .then(async response => {
+                console.log('Success', response)
                 loginUser(response);
             })
             .catch(error => {
@@ -34,7 +35,8 @@ export default function useAuth() {
     }
 
     const loginUser = (response) => {
-        localStorage.setItem('loggerIn', Jason.stringify(true));
+        console.log('Success2', response)
+        localStorage.setItem('loggedIn', JSON.stringify(true))
         router.push({ name: 'posts.index'})
     }
 
