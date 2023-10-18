@@ -6,7 +6,7 @@ export default function useAuth() {
     const processing = ref(false);
     const validationErrors = ref({});
     const router = useRouter();
-    const loginForm = ref({
+    const loginForm = reactive({
         'email': '',
         'password': '',
         'remember': false,
