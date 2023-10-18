@@ -19,6 +19,8 @@ function auth (to , from , next) {
 
 const routes = [
     {
+        path: '/',
+        redirect: { name: 'login' }, 
         component: GuestLayout,
         children: [
             {
